@@ -11,6 +11,7 @@
 require 'csv'
 require 'gmail'
 
+
 # Opens .csv file and writes headings
 CSV.open('to_do_genie.csv', 'ab') do |csv|
     csv << ["Name", "Description", "Due"]
