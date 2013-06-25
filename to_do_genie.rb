@@ -13,12 +13,16 @@ require 'gmail'
 
 
 # Opens .csv file and writes headings
-CSV.open('to_do_genie.csv', 'ab') do |csv|
-    csv << ["Name", "Description", "Due"]
-
+ 
+  def create_file
+   if File.exist?('to_do_genie.csv') == false
+   CSV.open('to_do_genie.csv', 'ab') do |csv|
+      csv << ["Name", "Description", "Due"]
+    end
+  end
 
   def get_task
-     
+      
       puts "Enter a task name."
     	@task_name = gets.chomp 
     	puts "Enter a description of task."
@@ -42,6 +46,25 @@ CSV.open('to_do_genie.csv', 'ab') do |csv|
     end
   end
 end
+
+f = File.open('to_do_genie.csv','r')
+def send_email(message)
+  Gmail.new('jswatson0', 'mybonny01') do |gmail|
+    gmail.deliver do
+      to "jswatson0@gmail.com"
+      from "jswatson0@gmail.com"
+      subject "Having fun in Puerto Rico!"
+      text_part do
+        body f
+        add_file 'to_do_genie.csv'   
+      end 
+    end
+  end 
+end
+
+
+
+
 #    If you pass a block, the session will be passed into the block,
 #    and the session will be logged out after the block is executed.
 # gmail = Gmail.new(username, password)
