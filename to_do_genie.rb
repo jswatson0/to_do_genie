@@ -14,30 +14,29 @@ require 'gmail'
 
 # Opens .csv file and writes headings
  
-  def create_file
-   if File.exist?('to_do_genie.csv') == false
-   CSV.open('to_do_genie.csv', 'ab') do |csv|
-      csv << ["Name", "Description", "Due"]
-    end
+def create_file
+ if File.exist?('to_do_genie.csv') == false
+ CSV.open('to_do_genie.csv', 'ab') do |csv|
+    csv << ["Name", "Description", "Due"]
   end
+end
 
-  def get_task
-      
-      puts "Enter a task name."
-    	@task_name = gets.chomp 
-    	puts "Enter a description of task."
-    	@task_desc = gets.chomp
-    	puts "Enter a due date in the format dd/mm/yy"
-    	@task_due = gets.chomp
-  		until @task_due.length == 8 && @task_due.include?('/')
-  		  puts "Please enter date in dd/mm/yy format"
-  		  @task_due = gets.chomp
-  	  end
-  		  puts "task is saved"
-      CSV.open('to_do_genie.csv','ab') do |csv|
-        csv << [@task_name, @task_desc, @task_due]
-        puts "Do you want to add another task? (y or n)"
-        answer = gets.chomp
+def get_task    
+  puts "Enter a task name."
+  @task_name = gets.chomp 
+  	puts "Enter a description of task."
+  @task_desc = gets.chomp
+  	puts "Enter a due date in the format dd/mm/yy"
+  @task_due = gets.chomp
+	until @task_due.length == 8 && @task_due.include?('/')
+		puts "Please enter date in dd/mm/yy format"
+		@task_due = gets.chomp
+	end
+	  puts "task is saved"
+    CSV.open('to_do_genie.csv','ab') do |csv|
+      csv << [@task_name, @task_desc, @task_due]
+      puts "Do you want to add another task? (y or n)"
+      answer = gets.chomp
       if answer == 'y'
         get_task
       else
@@ -47,16 +46,19 @@ require 'gmail'
   end
 end
 
-f = File.open('to_do_genie.csv','r')
-def send_email(message)
+ # f = File.open('to_do_genie.csv','r')
+
+
+def send_email
+  arr_of_arrs = CSV.read("to_do_genie.csv")
   Gmail.new('jswatson0', 'mybonny01') do |gmail|
     gmail.deliver do
       to "jswatson0@gmail.com"
       from "jswatson0@gmail.com"
       subject "Having fun in Puerto Rico!"
       text_part do
-        body f
-        add_file 'to_do_genie.csv'   
+        body arr_of_arrs.join("\n")
+        # add_file 'to_do_genie.csv'   
       end 
     end
   end 
