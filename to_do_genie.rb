@@ -47,22 +47,28 @@ def get_task
 end
 
  # f = File.open('to_do_genie.csv','r')
-
+# d
+#   puts CSV.read('to_do_genie.csv').each do 
+#   |item| puts item.join(', ')
+# end
+# end
 
 def send_email
-  arr_of_arrs = CSV.read("to_do_genie.csv")
+  f = CSV.read('to_do_genie.csv').each do 
+  |item| puts item.join(', ')
   Gmail.new('jswatson0', 'mybonny01') do |gmail|
     gmail.deliver do
       to "jswatson0@gmail.com"
       from "jswatson0@gmail.com"
       subject "Having fun in Puerto Rico!"
       text_part do
-        body arr_of_arrs.join("\n")
-        # add_file 'to_do_genie.csv'   
+        body "#{f}"
       end 
     end
   end 
 end
+end  
+
 
 
 
