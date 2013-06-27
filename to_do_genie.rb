@@ -10,6 +10,8 @@
 
 require 'csv'
 require 'gmail'
+# @gmail_username = ENV['GMAIL_USERNAME']
+# @gmail_password = ENV['GMAIL_PASSWORD']
 
 
 # Opens .csv file and writes headings
@@ -53,22 +55,26 @@ end
 # end
 # end
 
+
+
 def send_email
-  f = CSV.read('to_do_genie.csv').each do 
-  |item| puts item.join(', ')
+  
+  # f = CSV.read('to_do_genie.csv').each do 
+  # |item| puts item.join(', ')
   Gmail.new(ENV['GMAIL_USERNAME'], ENV['GMAIL_PASSWORD']) do |gmail|
     gmail.deliver do
       to "jswatson0@gmail.com"
       from "jswatson0@gmail.com"
       subject "Having fun in Puerto Rico!"
       text_part do
-        body "#{f}"
+        body "something"
       end 
     end
   end 
 end
-end  
 
+
+send_email
 
 
 
