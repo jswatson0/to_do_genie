@@ -56,7 +56,7 @@ end
 def send_email
   f = CSV.read('to_do_genie.csv').each do 
   |item| puts item.join(', ')
-  Gmail.new('jswatson0', 'mybonny01') do |gmail|
+  Gmail.new('#######', '######') do |gmail|
     gmail.deliver do
       to "jswatson0@gmail.com"
       from "jswatson0@gmail.com"
