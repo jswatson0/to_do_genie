@@ -31,8 +31,10 @@ def create_file
     
   end
 end
+
  
 def enter_tasks
+  puts "ToDo Genie Keeps you on track"
   puts "Enter a task name."
   task_name = gets.chomp 
     puts "Enter a description of task."
@@ -51,7 +53,7 @@ def enter_tasks
     if answer == 'y'
       get_task
     else
-      puts "Goodbye"
+      puts "ToDo Genie has sent your list"
     end
   end
 end
