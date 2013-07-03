@@ -27,39 +27,44 @@ Dotenv.load
 # Opens .csv file and writes headings
 def create_file
   if !File.exist?('to_do_genie.csv') 
-    CSV.open('to_do_genie.csv', 'ab') 
-    
+    CSV.open('to_do_genie.csv', 'ab')    
   end
 end
 
  
 def enter_tasks
   puts "ToDo Genie Keeps you on track"
+
   puts "Enter a task name."
-  task_name = gets.chomp 
-    puts "Enter a description of task."
+  task_name = gets.chomp
+
+  puts "Enter a description of task."
   task_desc = gets.chomp
-    puts "Enter a due date in the format dd/mm/yy"
+
+  puts "Enter a due date in the format dd/mm/yy"
   task_due = gets.chomp
+
   until task_due.length == 8 && task_due.include?('/')
     puts "Please enter date in dd/mm/yy format"
     task_due = gets.chomp
   end
+
   puts "task is saved"
+  
   CSV.open('to_do_genie.csv','ab') do |csv|
     csv << [task_name, task_desc, task_due]
     puts "Do you want to add another task? (y or n)"
     answer = gets.chomp
-    if answer == 'y'
-      get_task
-    else
-      puts "ToDo Genie has sent your list"
+      if answer == 'y'
+        get_task
+      else
     end
   end
 end
  
 def create_html_body
-  html_email = '<table border="1" bordercolor="#FFCC00" style="background-color:#FFFFCC" width="100%" cellpadding="3" cellspacing="3">
+  html_email = '<h1> This is what you have going on. </h1>
+        <table border="1" bordercolor="#FFCC00" style="background-color:#FFFFCC" width="100%" cellpadding="3" cellspacing="3">
         <tr style="text-align:center">
           <th>Task</th>
           <th>Description</th>
@@ -104,6 +109,7 @@ def update_and_send_task_list
 end
  
 update_and_send_task_list
+puts "ToDo Genie has sent your list"
  
  
 # This test simply validates that create_file does its job.
