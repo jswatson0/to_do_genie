@@ -56,7 +56,7 @@ def enter_tasks
     puts "Do you want to add another task? (y or n)"
     answer = gets.chomp
       if answer == 'y'
-        get_task
+        enter_tasks
       else
     end
   end
@@ -78,7 +78,6 @@ def create_html_body
       html_email << "<td>#{column}</td>\n"
     end
     html_email << "</tr>\n"
-    # html_email << "<tr><td>#{row[0]}</td><td>#{row[1]}</td><td>#{row[2]}</td></tr>\n"
   end
  
   html_email + closing_tag
@@ -92,7 +91,7 @@ def send_email
   gmail.deliver do
     to "jswatson0@gmail.com"
     from "jswatson0@gmail.com"
-    subject "ToDo Test"
+    subject "ToDo Genie"
  
     html_part do
       body html_body
